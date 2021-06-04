@@ -1,4 +1,4 @@
-from roles.server_deploy.os_windows.filter_plugins.hide_sensitive_data import hide_sensitive_data
+from filter_plugins.hide_sensitive_data.hide_sensitive_data import hide_sensitive_data
 
 
 def test_hide_sensitive_data():

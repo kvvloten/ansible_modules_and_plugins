@@ -7,7 +7,7 @@ Tested on Ansible 2.9
 
 ### dns_reverse
 
-Given a subnet it returns the reverse dns-zone:
+Given a subnet it returns the reverse dns-zone (IPv6 not implemented):
 
 ```ansible
 - debug:
@@ -90,7 +90,7 @@ Compares two texts line by lines. Text can be in a file or in a variable.
 
 ### samba_dns
 
-Manage a zone in samba-dns
+Manage a zone in samba-dns (IPv6 not implemented)
 
 ```ansible
 -  samba_dns_zone:
@@ -100,7 +100,7 @@ Manage a zone in samba-dns
     samba_password: "{{ samba_password }}"
 ```
 
-Manage records in a zone in samba-dns
+Manage records in a zone in samba-dns (IPv6 not implemented)
 
 ```ansible
 -  samba_dns_record:

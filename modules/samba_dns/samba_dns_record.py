@@ -132,7 +132,7 @@ class Module:
         record_value = self.module.params['value']
 
         hostname_regex = re.compile(r'(?!-)[A-Z\d-]{1,63}(?<!-)$', re.IGNORECASE)
-        reverse_name_regex = re.compile(r'^(?:(?:\d+\.)*\d+(?:-in\.addr\.arpa\.)?)$')
+        reverse_name_regex = re.compile(r'^(?:(?:\d+\.)*\d+)\.(\.ip6\.arpa|IN-ADDR|in-addr\.arpa|\sSnd\s)\.?$')
         domain_regex = re.compile(r'^((?=[a-z0-9-]{1,63}\.)(xn--)?[a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,63}$')
         partial_ip_regex = re.compile(
             r'^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){0,3}$')

@@ -111,7 +111,7 @@ class Module:
     def validate_inputs(self):
         zone_name = self.module.params['name']
         domain_regex = re.compile(r'^((?=[a-z0-9-]{1,63}\.)(xn--)?[a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,63}$')
-        reverse_name_regex = re.compile(r'^(?:(?:\d+\.)*\d+(?:-in\.addr\.arpa\.)?)$')
+        reverse_name_regex = re.compile(r'^(?:(?:\d+\.)*\d+)\.(\.ip6\.arpa|IN-ADDR|in-addr\.arpa|\sSnd\s)\.?$')
 
         if domain_regex.match(zone_name):
             return zone_name

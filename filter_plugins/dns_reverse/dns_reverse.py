@@ -31,7 +31,7 @@ def py2unicode(text):
 
 
 def get_reverse_ip(ip_address, zone_name):
-    reverse_name_regex = re.compile(r'^(?:(?:\d+\.)*\d+(?:-in\.addr\.arpa\.)?)$')
+    reverse_name_regex = re.compile(r'^(?:(?:\d+\.)*\d+)\.(\.ip6\.arpa|IN-ADDR|in-addr\.arpa|\sSnd\s)\.?$')
     partial_ip_regex = re.compile(
         r'^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){0,3}$')
 
@@ -42,7 +42,10 @@ def get_reverse_ip(ip_address, zone_name):
         except ValueError:
             raise('zone: invalid, should be reverse-name or network/netmask or network/prefix, '
                   'specified was {}'.format(zone_name))
+
     n_record_parts = 7 - len(zone_name.split('.'))
+    if n_record_parts == 0:
+        n_record_parts = 1
     if partial_ip_regex.match(ip_address):
         try:
             ipaddress.ip_address(py2unicode(ip_address))
