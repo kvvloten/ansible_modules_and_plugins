@@ -1,6 +1,7 @@
 # Ansible modules and plugins
 
 A collection of modules and plugins for Ansible. 
+
 Tested on Ansible 2.9
 
 Filter plugins:
@@ -71,7 +72,7 @@ ok: [host] => {
 }
 ```
 
-This can be used to loop over usable ips:
+This can be used to iterate over usable ips:
 ```jinja2
 {% for ipaddress in "192.168.1.73/29" | usable_ipaddr() %}
 {{ ipaddress }}
@@ -82,9 +83,9 @@ This can be used to loop over usable ips:
 
 [vaultwarden](https://github.com/dani-garcia/vaultwarden) is an "Unofficial Bitwarden compatible server written in Rust".
 
-A great help to install Vaultwarden is [vaultwarden debian package helper](https://github.com/greizgh/vaultwarden-debian)
+A great help to install Vaultwarden in Debian is [vaultwarden debian package helper](https://github.com/greizgh/vaultwarden-debian)
 
-Here is a set of filters for all crypto operations in Vaultwarden, i.e. it enables management of users by Ansible:
+A set of filters for all crypto operations in Vaultwarden (or Bitwarden).
 * vaultwarden_master_key
 * vaultwarden_symmetric_key
 * vaultwarden_hashed_password
@@ -102,19 +103,20 @@ Here is a set of filters for all crypto operations in Vaultwarden, i.e. it enabl
 * vaultwarden_org_invite_token
 * vaultwarden_get_users_overview
 
-With this set of filter-plugins user and organization management can be done with Ansible.
+This set of filter-plugins enables management of users and organizations in Vaultwarden (or Bitwarden) by Ansible.
+
 Options are:
 * Admin login with token: (un)lock users, remove users, remove 2fa
 * Create user and validate email, add logins etc, add organization(s)
 * Create organization
 And much more as long as the API calls are known. 
 
-Some API documentation can be found here:
+API documentation is incomplete, some helpful links are:
 * https://github.com/jcs/rubywarden/blob/master/API.md
 * https://docs.cozy.io/en/cozy-stack/bitwarden/  
 * http://gnunux.info/dotclear2/index.php?post/2020/10/11/%C3%89crire-un-client-Bitwarden-en-python-%3A-identifiant
 
-A way to reverse engineer API calls is to use the web-client of Bitwarden, put the browser in developer mode and watch the 'Network' Tab
+Reverse engineering of API calls can easily be done by using the web-interface. Put the browser in developer mode and watch client-server calls in 'Network'-tab.
 
 An example: create user and automatically accept the email invitation 
 ```ansible
