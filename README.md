@@ -3,6 +3,17 @@
 A collection of modules and plugins for Ansible. 
 Tested on Ansible 2.9
 
+Filter plugins:
+* dns_reverse
+* hide_sensitive_data
+* usable_ipaddresses
+* vaultwarden_*
+
+Modules:
+* difflines
+* samba_dns_record
+& samba_dns_zone
+
 ## Filter plugins
 
 ### dns_reverse
