@@ -5,6 +5,7 @@ A collection of modules and plugins for Ansible.
 Tested on Ansible 2.9
 
 Filter plugins:
+* bitwise_*
 * dns_reverse
 * hide_sensitive_data
 * usable_ipaddresses
@@ -12,10 +13,40 @@ Filter plugins:
 
 Modules:
 * difflines
+* ldap_search 
 * samba_dns_record
-& samba_dns_zone
+* samba_dns_zone
 
 ## Filter plugins
+
+### bitwise
+
+Filters for bitwise operations:
+* bitwise_and
+* bitwise_or
+
+```ansible
+- debug:
+    msg: "{{ 3 | bitwise_and(2) }}"
+```
+Output:
+```text
+ok: [host] => {
+    "msg": "2"
+}
+```
+
+```ansible
+- debug:
+    msg: "{{ 1 | bitwise_or(2) }}"
+```
+Output:
+```text
+ok: [host] => {
+    "msg": "2"
+}
+```
+
 
 ### dns_reverse
 
@@ -253,6 +284,8 @@ Compares two texts line by lines. Text can be in a file or in a variable.
     msg: "{{ diff.lines_added }}"
 ```
 
+### ldap_search
+
 ### samba_dns
 
 Manage a zone in samba-dns (IPv6 not implemented)
@@ -277,3 +310,4 @@ Manage records in a zone in samba-dns (IPv6 not implemented)
     samba_username: "{{ samba_user }}"
     samba_password: "{{ samba_password }}"
 ```
+
