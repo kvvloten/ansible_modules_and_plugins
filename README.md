@@ -5,7 +5,6 @@ A collection of modules and plugins for Ansible.
 Tested on Ansible 2.9
 
 Filter plugins:
-* bitwise_*
 * dns_reverse
 * hide_sensitive_data
 * usable_ipaddresses
