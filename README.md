@@ -15,37 +15,9 @@ Modules:
 * ldap_search 
 * samba_dns_record
 * samba_dns_zone
+* lxc_subordinate
 
 ## Filter plugins
-
-### bitwise
-
-Filters for bitwise operations:
-* bitwise_and
-* bitwise_or
-
-```ansible
-- debug:
-    msg: "{{ 3 | bitwise_and(2) }}"
-```
-Output:
-```text
-ok: [host] => {
-    "msg": "2"
-}
-```
-
-```ansible
-- debug:
-    msg: "{{ 1 | bitwise_or(2) }}"
-```
-Output:
-```text
-ok: [host] => {
-    "msg": "2"
-}
-```
-
 
 ### dns_reverse
 
@@ -283,8 +255,6 @@ Compares two texts line by lines. Text can be in a file or in a variable.
     msg: "{{ diff.lines_added }}"
 ```
 
-### ldap_search
-
 ### samba_dns
 
 Manage a zone in samba-dns (IPv6 not implemented)
@@ -310,3 +280,38 @@ Manage records in a zone in samba-dns (IPv6 not implemented)
     samba_password: "{{ samba_password }}"
 ```
 
+### lxc_subordinate
+
+Manage subordinate ranges for lxc containers.
+It maintains ranges in /etc/subuid and /etc/subgid, because those file do not store enough information an extra cache
+file is used to make it idempotent
+
+```ansible
+-   lxc_subordinate:
+    name: "mycontainer"
+    path: "/etc/lxc/ansible_subordinates"  # path to subordinate cache file
+    range_count: 65536
+    owner: "root"  # owner/group of the container
+    group: "root"
+    map_users: ["mapped-user1", "mapped-user2"]  # must exist on the host, gets mapped into the container
+    map_groups: ["mapped-user1", "mapped-user2", "group1"]  
+  register: r_subordinate
+  #  Updated /etc/subuid, /etc/subgid, /etc/lxc/ansible_subordinates
+  #  returns:
+  #    lxc_config: []  
+  #    rootfs: {owner:, group:}  # uid,gid for container rootfs 
+
+- file:
+    path: "/var/lib/lxc/mycontainer/rootfs"
+    owner: "{{ r_subordinate.rootfs.owner }}"
+    group: "{{ r_subordinate.rootfs.group }}"
+    mode: "0755"
+    state: "directory"
+
+- set_fact:
+    container_conf: "{%- set config = [] -%}
+                     {%- for item in r_subordinate.lxc_config -%}
+                        {{- config.append('lxc.idmap = {}'.format(item)) -}}
+                     {%- endfor -%}
+                     {{- config -}}"
+```
